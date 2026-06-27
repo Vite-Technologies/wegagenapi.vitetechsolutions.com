@@ -12,6 +12,7 @@ export function baseOptions(): BaseLayoutProps {
             alt={appName}
             width={100}
             height={100}
+            loading="eager"
             className="h-6 w-auto object-cover shrink-0"
           />
           <span className="shrink-0">{appName}</span>
