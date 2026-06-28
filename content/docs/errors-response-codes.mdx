@@ -1,0 +1,98 @@
+---
+title: Errors & Response Codes
+description: Understand HTTP status behavior and the universal error schema returned by Wegagen Connect.
+---
+
+Wegagen Connect uses standard HTTP response codes to indicate whether an API request succeeded or failed.
+
+## Response Code Categories
+
+- `2xx` codes indicate success
+- `4xx` codes indicate an error caused by the request data or request state
+- `5xx` codes indicate an internal middleware error or a downstream banking error
+
+## Universal Error Schema
+
+When an API error occurs, Wegagen Connect returns a structured JSON payload to support troubleshooting and cross-system tracing.
+
+### Error Response Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `statusCode` | `number` | The HTTP status code returned by the API |
+| `timestamp` | `string` | ISO 8601 timestamp showing when the error occurred |
+| `path` | `string` | Relative API path that triggered the exception |
+| `requestId` | `string` | Unique tracking identifier to provide to support when investigating unexpected errors |
+| `message` | `string \| array` | Human-readable error description or field-level validation details |
+| `error` | `string` | High-level error label when provided |
+
+<Callout title="Log request IDs" type="info">
+  Always persist the `requestId` in your logs. It is the fastest bridge
+  between merchant support, application logs, and platform debugging.
+</Callout>
+
+## Example Error Payloads
+
+<Tabs items={["401 Unauthorized", "400 Bad Request", "500 Internal Error"]} defaultIndex={0}>
+  <Tab value="401 Unauthorized">
+
+  If `x-secret-key` is missing, expired, or invalid, the API returns a `401 Unauthorized` response.
+
+  ```json
+  {
+    "statusCode": 401,
+    "timestamp": "2026-06-27T20:05:14.123Z",
+    "path": "/v1/payments",
+    "message": "Unauthorized",
+    "error": "No valid API key provided in 'x-secret-key' header.",
+    "requestId": "req_cls_7f9a2c3b8d1e"
+  }
+  ```
+
+  </Tab>
+  <Tab value="400 Bad Request">
+
+  If request payload fields fail validation, detailed validation output is returned in the `message` field.
+
+  ```json
+  {
+    "statusCode": 400,
+    "timestamp": "2026-06-27T20:12:45.891Z",
+    "path": "/v1/payments",
+    "message": [
+      "amount must be a positive number representing the lowest currency unit",
+      "currency must be a valid ISO 4217 code (e.g., ETB)"
+    ],
+    "error": "Bad Request",
+    "requestId": "req_cls_3b9f8d1c4a2e"
+  }
+  ```
+
+  </Tab>
+  <Tab value="500 Internal Error">
+
+  If an unhandled middleware issue or downstream banking failure occurs, public responses are kept safe while internal systems retain the full trace.
+
+  ```json
+  {
+    "statusCode": 500,
+    "timestamp": "2026-06-27T20:15:30.002Z",
+    "path": "/v1/payments",
+    "message": "Internal server error",
+    "requestId": "req_cls_9e8d1c7a5b3f"
+  }
+  ```
+
+  </Tab>
+</Tabs>
+
+## Operational Guidance
+
+- Log the `requestId` for every failed call
+- Surface validation messages to internal operators when the error is merchant-correctable
+- Treat `5xx` responses as retry and support-investigation candidates
+
+## Continue With
+
+- [Authentication](/docs/authentication)
+- [Retrieve Order Status](/docs/orders/retrieve-order-status)

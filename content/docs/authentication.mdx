@@ -1,0 +1,53 @@
+---
+title: Authentication
+description: Securely authenticate requests to the Wegagen Connect API using the x-secret-key header.
+---
+
+All requests to the Wegagen Connect API should be made over HTTPS.
+
+Instead of basic authentication, Wegagen Connect authenticates every request using a custom HTTP header. You must include your secret API key in each request to verify your identity and permissions.
+
+<Callout title="Backend-only secret" type="warning">
+  `x-secret-key` must only live on secure backend infrastructure. Never expose
+  it in browsers, mobile applications, or public repositories.
+</Callout>
+
+## Authentication Header
+
+To authenticate, send your secret key in the `x-secret-key` header.
+
+The target environment is determined automatically from the prefix of the key you provide.
+
+| Header Key | Description |
+| --- | --- |
+| `x-secret-key` | Your environment-specific API key, for example `pm_test_...` or `pm_live_...`. |
+
+## Retrieve API Keys
+
+You can retrieve API keys from the **Developers** section of your Wegagen Connect Dashboard.
+
+## Important Security Rules
+
+`x-secret-key` carries the privilege to initiate transactions and query sensitive data for your merchant account.
+
+- Never embed this key in browser code
+- Never embed this key in mobile client code
+- Never commit this key to version control
+- Always proxy requests through your secure backend server
+
+## Example Header
+
+```http
+x-secret-key: pm_test_your_secret_key
+```
+
+## Notes
+
+- Sandbox and production routing are inferred automatically from the key prefix
+- Invalid, missing, or expired keys return an unauthorized response
+- Authentication failures include a structured error payload for debugging
+
+## Continue With
+
+- [Errors & Response Codes](/docs/errors-response-codes)
+- [Create Order](/docs/orders/create-order)

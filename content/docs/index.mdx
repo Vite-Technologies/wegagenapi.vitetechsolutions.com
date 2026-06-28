@@ -1,13 +1,40 @@
 ---
-title: Hello World
-description: Your first document
+title: Overview
+description: Integration overview for merchant platforms connecting to Wegagen Bank through the Wegagen Connect API.
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+Wegagen Connect API documentation is designed for merchant system developers and IT managers integrating external platforms with Wegagen Bank's payment infrastructure.
 
-## What is Next?
+## What Is Wegagen Connect?
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
-</Cards>
+Wegagen Connect is a secure API middleware that bridges merchant applications directly with Wegagen Bank's core payment systems. It operates as a high-performance routing layer for payment initiation, validation, and transaction status tracking. The middleware does **not** hold merchant or customer funds.
+
+## Who Is This Documentation For?
+
+This documentation is written for:
+
+- Merchant platform developers integrating backend payment flows
+- Enterprise IT managers responsible for secure financial system connectivity
+- Teams building reconciliation, payment status tracking, and webhook handling around Wegagen Bank transactions
+
+## What You Will Find Here
+
+- Authentication requirements using the `x-secret-key` header
+- Order creation and order status retrieval flows
+- Structured error payloads and response code behavior
+- A guided tutorial for completing your first payment integration
+
+## Scope Note
+
+This documentation focuses on the external integration surface: authentication, request payloads, response payloads, and webhook-related implementation patterns.
+
+It does **not** document Wegagen Bank's internal operational workflows such as internal fund settlement, reconciliation inside core banking systems, or internal bank-side processing rules.
+
+## Recommended Reading Order
+
+1. [Getting Started](/docs/getting-started)
+2. [Authentication](/docs/authentication)
+3. [Create Order](/docs/orders/create-order)
+4. [Retrieve Order Status](/docs/orders/retrieve-order-status)
+5. [Tutorial](/docs/tutorial)
+6. [Errors & Response Codes](/docs/errors-response-codes)

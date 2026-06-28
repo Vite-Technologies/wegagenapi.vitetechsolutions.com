@@ -1,0 +1,77 @@
+---
+title: Getting Started
+description: Core concepts, integration scope, and the baseline expectations for using the Wegagen Connect API.
+---
+
+The Wegagen Connect API is organized around REST. It uses predictable resource-oriented URLs, accepts JSON request bodies, returns JSON responses, and follows standard HTTP verbs and HTTP status codes.
+
+## Integration Model
+
+Wegagen Connect sits between your merchant platform and Wegagen Bank's payment infrastructure.
+
+<div className="fd-steps [&_h3]:fd-step">
+
+### Merchant Backend
+
+Your secure backend server sends authenticated requests to Wegagen Connect using JSON payloads and the `x-secret-key` header.
+
+### Wegagen Connect Middleware
+
+The middleware validates the request, routes the transaction into Wegagen Bank's infrastructure, and maintains the integration-safe API surface.
+
+### Merchant Webhook + Status Recovery
+
+Your system receives asynchronous updates on `notify_url` and can poll order status directly when a webhook needs verification or recovery.
+
+</div>
+
+## What It Does
+
+Wegagen Connect is responsible for:
+
+- Real-time payment initiation
+- Request validation
+- Status tracking across payment flows
+- Providing a clean merchant-facing external API surface
+
+## Scope Boundary
+
+Wegagen Connect does **not**:
+
+- Hold merchant funds
+- Hold customer funds
+- Expose internal bank-side workflows
+- Document internal settlement or internal reconciliation processes
+
+## Who Should Read This
+
+This documentation is specifically written for merchant system developers and IT managers building secure, low-latency integrations with Wegagen Bank.
+
+## Baseline Requirements
+
+- All requests should be sent over HTTPS
+- All API calls must originate from your secure backend server
+- Request and response payloads are JSON-based
+- Authentication is done with the `x-secret-key` header
+
+## Before You Start
+
+- Keep your secret key in backend environment variables only
+- Never expose your key in browser or mobile code
+- Make sure your `notify_url` is controlled by your platform
+- Prepare a merchant-generated `order_id`
+- Decide whether the transaction uses `paybill` or `ussd_ebirr`
+- Model your internal order state around `pending`, `paid`, and `fail`
+- Log `requestId` values from failed responses
+- Keep webhook handling idempotent
+- Use the status endpoint as a recovery path when webhook delivery is uncertain
+
+## Example Requests
+
+Reserved for the upcoming `/ping` endpoint example.
+
+## Continue With
+
+- [Authentication](/docs/authentication)
+- [Create Order](/docs/orders/create-order)
+- [Tutorial](/docs/tutorial)

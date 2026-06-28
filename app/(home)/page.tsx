@@ -3,328 +3,328 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
+  Activity,
   ArrowRight,
-  Code2,
+  CircleAlert,
+  KeyRound,
+  ServerCog,
   ShieldCheck,
-  Zap,
-  Building2,
-  Globe,
+  Workflow,
   Terminal,
-  Layers,
-  Lock,
-  Cpu,
+  Code2,
 } from "lucide-react";
+
+const integrationSteps = [
+  {
+    step: "1",
+    title: "Retrieve your secret key",
+    description:
+      "Collect your pm_test_ or pm_live_ key from the developer dashboard and store it only on your secure backend.",
+  },
+  {
+    step: "2",
+    title: "Create an order",
+    description:
+      "Send a JSON request to the create-order endpoint with customer, amount, payment method, services, and notify_url.",
+  },
+  {
+    step: "3",
+    title: "Track the lifecycle",
+    description:
+      "Listen for asynchronous notifications and use the order status endpoint to confirm pending, paid, or fail states.",
+  },
+];
+
+const endpointCards = [
+  {
+    title: "Create Order",
+    href: "/docs/orders/create-order",
+    method: "POST",
+    path: "/api/orders/create-order",
+    description:
+      "Initiate a transaction route and trigger the selected payment method in real time.",
+  },
+  {
+    title: "Retrieve Order Status",
+    href: "/docs/orders/retrieve-order-status",
+    method: "GET",
+    path: "/api/orders/:orderId/status",
+    description:
+      "Poll the current state of a transaction when your system needs a direct status check.",
+  },
+];
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col min-h-screen">
-      {/* Hero Section - Clean & Minimal */}
-      <section className="relative px-6 pt-32 pb-20 lg:px-8 lg:pt-40 lg:pb-32">
-        {/* Subtle Grid Background */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
-          <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background" />
+    <main className="flex min-h-screen flex-col bg-background selection:bg-primary/20">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-[120px] pb-20 lg:pt-[160px] lg:pb-32 flex flex-col items-center justify-center text-center px-6">
+        <div className="absolute inset-0 -z-10 bg-background">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         </div>
 
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8 flex items-center gap-2"
-          >
-            <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
-              <Zap className="mr-1.5 h-3 w-3" />
-              v2.0 Live
-            </span>
-            <span className="text-xs text-muted-foreground">
-              Now serving Wegagen Bank
-            </span>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-md"
+        >
+          <ShieldCheck className="h-4 w-4 text-primary" />
+          <span>Wegagen Connect API powered by Prana Connect</span>
+        </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
-          >
-            Enterprise payments,
-            <br />
-            <span className="text-primary">simplified.</span>
-          </motion.h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-8 max-w-4xl text-4xl font-semibold tracking-tighter sm:text-5xl md:text-6xl lg:text-[64px] leading-[1.1]"
+        >
+          Secure payment middleware for <br className="hidden sm:block" />
+          <span className="text-muted-foreground">merchant platforms.</span>
+        </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 max-w-2xl text-base text-muted-foreground lg:text-lg"
-          >
-            Prana Connect is the middleware that bridges your platform to
-            Wegagen Bank. Secure, NBE-compliant, and built for scale.
-          </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+        >
+          Wegagen Connect is a REST API middleware that bridges merchant systems
+          directly to Wegagen Bank&apos;s core payment infrastructure. Initiate
+          transactions, validate requests, and track payment states in real
+          time.
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-10 flex flex-col gap-3 sm:flex-row"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-10 flex flex-col sm:flex-row items-center gap-4"
+        >
+          <Link
+            href="/docs/getting-started"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:ring-2 focus:ring-primary/20"
           >
-            <Link
-              href="/docs"
-              className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-            <Link
-              href="/docs/api-reference"
-              className="inline-flex items-center justify-center rounded-lg border border-input bg-background px-6 py-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              API Reference
-            </Link>
-          </motion.div>
-        </div>
+            Start integrating
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+          <Link
+            href="/docs/orders/create-order"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-background px-8 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+          >
+            <Terminal className="mr-2 h-4 w-4 text-muted-foreground" />
+            Explore create-order
+          </Link>
+        </motion.div>
       </section>
 
       {/* Bento Grid Features */}
-      <section className="px-6 py-16 lg:px-8">
+      <section className="px-6 py-24 lg:px-8 border-t border-border/50 bg-background">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold tracking-tight">
-              Built for enterprise scale
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Built for production-grade integrations
             </h2>
-            <p className="mt-2 text-muted-foreground">
-              Everything you need to process payments at scale.
+            <p className="mt-4 text-muted-foreground text-sm max-w-xl mx-auto">
+              Everything you need to connect your enterprise applications with
+              Wegagen Bank reliably and securely.
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3 auto-rows-fr">
-            {/* Large Card - Security */}
+          <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
+            {/* Large Box 1 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 md:col-span-2 md:row-span-2"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:col-span-2 hover:border-primary/30 transition-colors"
             >
-              <div className="mb-4 inline-flex rounded-xl bg-primary/10 p-3 text-primary">
-                <ShieldCheck className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-semibold">NBE Compliant & Secure</h3>
-              <p className="mt-2 text-sm text-muted-foreground max-w-md">
-                Fully compliant with National Bank of Ethiopia regulations.
-                End-to-end encryption, PCI-DSS standards, and bank-grade
-                security.
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ServerCog className="h-8 w-8 text-primary mb-6" />
+              <h3 className="text-xl font-semibold">
+                Direct bank connectivity
+              </h3>
+              <p className="mt-2 text-muted-foreground leading-relaxed max-w-md">
+                Route merchant orders directly into Wegagen Bank&apos;s payment
+                infrastructure through a secure middleware layer built for high
+                availability.
               </p>
-              <div className="mt-6 flex gap-4">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Lock className="h-3 w-3" />
-                  <span>256-bit SSL</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Cpu className="h-3 w-3" />
-                  <span>PCI-DSS</span>
-                </div>
-              </div>
             </motion.div>
 
-            {/* Small Card - Integration */}
+            {/* Small Box 1 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 hover:border-primary/30 transition-colors"
             >
-              <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-2.5 text-primary">
-                <Code2 className="h-5 w-5" />
-              </div>
-              <h3 className="font-semibold">Drop-in Integration</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Minimal code changes. Works with your existing stack.
+              <KeyRound className="h-8 w-8 text-primary mb-6" />
+              <h3 className="text-lg font-semibold">Backend-only auth</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Every request is authenticated with the x-secret-key header.
+                Sandbox or production is inferred from the key prefix.
               </p>
             </motion.div>
 
-            {/* Small Card - Performance */}
+            {/* Small Box 2 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 hover:border-primary/30 transition-colors"
             >
-              <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-2.5 text-primary">
-                <Zap className="h-5 w-5" />
-              </div>
-              <h3 className="font-semibold">High Throughput</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Enterprise scale with low latency processing.
+              <CircleAlert className="h-8 w-8 text-primary mb-6" />
+              <h3 className="text-lg font-semibold">Structured payloads</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Debug faster with consistent JSON responses that include
+                statusCode, timestamp, path, message, and requestId.
               </p>
             </motion.div>
 
-            {/* Small Card - Multi-tenant */}
+            {/* Large Box 2 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 md:col-span-2 hover:border-primary/30 transition-colors"
             >
-              <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-2.5 text-primary">
-                <Building2 className="h-5 w-5" />
-              </div>
-              <h3 className="font-semibold">Multi-Tenant</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Perfect for SaaS and institutions.
-              </p>
-            </motion.div>
-
-            {/* Small Card - Developer */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6"
-            >
-              <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-2.5 text-primary">
-                <Terminal className="h-5 w-5" />
-              </div>
-              <h3 className="font-semibold">Developer First</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                SDKs, webhooks, and comprehensive APIs.
-              </p>
-            </motion.div>
-
-            {/* Small Card - Global */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6"
-            >
-              <div className="mb-3 inline-flex rounded-xl bg-primary/10 p-2.5 text-primary">
-                <Globe className="h-5 w-5" />
-              </div>
-              <h3 className="font-semibold">Local Focus</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Amharic support and Ethiopian payment methods.
+              <div className="absolute inset-0 bg-linear-to-tl from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Activity className="h-8 w-8 text-primary mb-6" />
+              <h3 className="text-xl font-semibold">
+                Real-time status handling
+              </h3>
+              <p className="mt-2 text-muted-foreground leading-relaxed max-w-md">
+                Create orders, receive webhook notifications on your notify_url,
+                and poll order status when needed. Webhooks and polling are
+                complementary.
               </p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="px-6 py-16 lg:px-8">
+      {/* Integration Flow Timeline */}
+      <section className="px-6 py-24 lg:px-8 border-t border-border/50 bg-muted/20">
         <div className="mx-auto max-w-6xl">
-          <div className="relative overflow-hidden rounded-3xl bg-primary px-6 py-16 text-center sm:px-16">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 z-0 opacity-10">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff20_1px,transparent_1px),linear-gradient(to_bottom,#ffffff20_1px,transparent_1px)] bg-size-[32px_32px]" />
-            </div>
-
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl">
-                Ready to integrate?
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.5fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-6">
+                <Workflow className="h-3.5 w-3.5" />
+                <span>Integration Flow</span>
+              </div>
+              <h2 className="text-3xl font-semibold tracking-tight">
+                From dashboard key to cleared transaction in three steps.
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-primary-foreground/80">
-                Get started with Prana Connect in minutes. Full documentation,
-                SDKs, and support included.
+              <p className="mt-4 text-muted-foreground leading-relaxed">
+                The recommended workflow is straightforward: provision a secure
+                backend secret, create the order, and reconcile the outcome via
+                webhook or status polling.
               </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Link
-                  href="/docs/quick-start"
-                  className="inline-flex items-center justify-center rounded-lg bg-background px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
-                >
-                  Quick Start
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-                <Link
-                  href="/docs"
-                  className="inline-flex items-center justify-center rounded-lg border border-primary-foreground/30 bg-transparent px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
-                >
-                  Documentation
-                </Link>
+            </div>
+
+            <div className="relative">
+              <div className="absolute left-6 top-6 bottom-6 w-px bg-border md:left-8" />
+              <div className="space-y-8">
+                {integrationSteps.map((item, index) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative pl-14 md:pl-20"
+                  >
+                    <div className="absolute left-0 top-1 flex h-12 w-12 items-center justify-center rounded-full border-[6px] border-muted bg-background text-sm font-bold text-primary shadow-sm md:left-2">
+                      {item.step}
+                    </div>
+                    <div className="rounded-3xl border border-border bg-background p-6 shadow-sm">
+                      <h3 className="text-lg font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border px-6 py-12 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-8 md:grid-cols-4">
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-2">
-                <Layers className="h-5 w-5 text-primary" />
-                <span className="font-semibold">Prana Connect</span>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground max-w-xs">
-                Enterprise payment middleware for Wegagen Bank. Secure,
-                scalable, and developer-friendly.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-medium text-sm">Product</h4>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link href="/docs" className="hover:text-foreground">
-                    Documentation
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/docs/api-reference"
-                    className="hover:text-foreground"
-                  >
-                    API Reference
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/docs/sdks" className="hover:text-foreground">
-                    SDKs
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-sm">Company</h4>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <span className="hover:text-foreground cursor-pointer">
-                    About
-                  </span>
-                </li>
-                <li>
-                  <span className="hover:text-foreground cursor-pointer">
-                    Contact
-                  </span>
-                </li>
-                <li>
-                  <span className="hover:text-foreground cursor-pointer">
-                    Status
-                  </span>
-                </li>
-              </ul>
-            </div>
+      {/* Endpoints */}
+      <section className="px-6 py-24 lg:px-8 border-t border-border/50 bg-background">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-6">
+            <Code2 className="h-3.5 w-3.5" />
+            <span>Developer Experience</span>
           </div>
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
-            <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} Prana Connect. All rights reserved.
-            </p>
-            <div className="flex gap-6">
-              <span className="text-xs text-muted-foreground hover:text-foreground cursor-pointer">
-                Privacy
-              </span>
-              <span className="text-xs text-muted-foreground hover:text-foreground cursor-pointer">
-                Terms
-              </span>
-            </div>
+          <h2 className="text-3xl font-semibold tracking-tight">
+            The order lifecycle is intentionally small and clear.
+          </h2>
+          <p className="mt-4 text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            Send the same create-order request from the backend stack your team
+            already uses. All integrations use secure server-side execution.
+          </p>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 text-left">
+            {endpointCards.map((endpoint) => (
+              <Link
+                key={endpoint.title}
+                href={endpoint.href}
+                className="group flex flex-col justify-between rounded-3xl border border-border bg-card p-6 transition-colors hover:border-primary/40 hover:bg-accent/30"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="rounded bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary">
+                      {endpoint.method}
+                    </span>
+                    <code className="text-xs text-muted-foreground font-mono">
+                      {endpoint.path}
+                    </code>
+                  </div>
+                  <h3 className="text-lg font-medium">{endpoint.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    {endpoint.description}
+                  </p>
+                </div>
+                <div className="mt-6 flex items-center text-sm font-medium text-primary">
+                  View documentation
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Footer CTA */}
+      <section className="px-6 py-24 lg:px-8 border-t border-border/50 bg-muted/10">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Ready to integrate with Wegagen Bank?
+          </h2>
+          <p className="mt-4 text-muted-foreground text-lg">
+            Use the documentation as your implementation guide.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/docs/getting-started"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Read getting started
+            </Link>
+            <Link
+              href="/docs/tutorial"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-border bg-background px-8 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+            >
+              View full tutorial
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

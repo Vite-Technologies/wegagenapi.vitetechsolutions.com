@@ -1,0 +1,67 @@
+---
+title: Tutorial
+description: Your First Payment in 10 Minutes
+---
+
+This tutorial walks you from access provisioning to a basic order status verification flow using the sandbox environment.
+
+<div className="fd-steps [&_h3]:fd-step">
+
+### Step 1: Acquire Keys
+
+Log in to your Wegagen Connect portal, navigate to the relevant service types, and retrieve your testing secret key with the `pm_test_...` prefix.
+
+- Store the key in a secure backend environment variable
+- Do not place the key in browser or mobile code
+- Confirm your development team is using the sandbox secret, not the live key
+
+### Step 2: Verify Your Core Connectivity
+
+Execute a raw `/ping` request from your terminal once the endpoint example is available. This validates that your environment can establish secure outbound TLS connectivity to the gateway router.
+
+- Your local or staging backend can reach the gateway over HTTPS
+- Network rules and firewalls are not blocking outbound traffic
+
+### Step 3: Simulate a USSD Push Initiation
+
+Send a sandbox request to `POST /api/orders/create-order` with:
+
+- A valid `x-secret-key`
+- `payment_method` set to `ussd_ebirr`
+- A merchant-generated `order_id`
+- A `notify_url` that points to your backend webhook endpoint
+
+Recommended focus areas:
+
+- Confirm field names match the documented schema exactly
+- Log the response payload and keep the created order reference
+- Persist the resulting identifiers for your reconciliation flow
+
+### Step 4: Query the Resulting State
+
+Use the order reference from the previous step to call:
+
+`GET /api/orders/:orderId/status`
+
+Your goal is to verify that your integration safely handles the possible state transitions:
+
+- `pending`
+- `paid`
+- `fail`
+
+</div>
+
+## What Success Looks Like
+
+At the end of this tutorial your platform should be able to:
+
+- Authenticate securely using the secret header
+- Create a sandbox order
+- Receive or recover the resulting transaction state
+- Map Wegagen Connect responses into your own internal order lifecycle
+
+## Recommended Next Reading
+
+- [Authentication](/docs/authentication)
+- [Create Order](/docs/orders/create-order)
+- [Retrieve Order Status](/docs/orders/retrieve-order-status)

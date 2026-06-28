@@ -1,0 +1,11 @@
+{
+  "title": "Wegagen Connect API",
+  "pages": [
+    "index",
+    "getting-started",
+    "authentication",
+    "orders",
+    "tutorial",
+    "errors-response-codes"
+  ]
+}
